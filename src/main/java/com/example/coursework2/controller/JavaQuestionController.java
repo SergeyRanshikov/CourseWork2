@@ -3,7 +3,7 @@ package com.example.coursework2.controller;
 import com.example.coursework2.model.Question;
 import com.example.coursework2.service.QuestionService;
 import org.springframework.web.bind.annotation.*;
-import com.example.coursework2.service.QuestionService;
+
 
 import java.util.Collection;
 
@@ -16,12 +16,12 @@ public class JavaQuestionController {
         this.service = service;
     }
 
-    @PostMapping("/exam/java/add")
+    @GetMapping("/exam/java/add")
     public Question addQuestion(@RequestParam String question, @RequestParam String answer) {
         return service.add(question, answer);
     }
 
-    @PostMapping("/exam/java/remove")
+    @GetMapping("/exam/java/remove")
     public Question removeQuestion(@RequestParam String question, @RequestParam String answer) {
         Question questionToRemove = new Question(question, answer);
         return service.remove(questionToRemove);
