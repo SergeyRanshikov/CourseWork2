@@ -20,17 +20,15 @@ public class ExaminerServiceImpl implements ExaminerService {
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        if (amount > questionService.getAll().size()|| amount <= 0) {
+        if (amount > questionService.getAll().size() || amount <= 0) {
             throw new BadRequestException("Запрошенное количество вопросов превышает количество доступных вопросов либо равно или меньше 0");
         }
 
         Collection<Question> questions = new HashSet<>();
-        int count = 0;
-        while (count < amount && !questionService.getAll().isEmpty()) {
+        while (questions.size() < amount) {
             Question randomQuestion = questionService.getRandomQuestion();
             if (randomQuestion != null) {
                 questions.add(randomQuestion);
-                count++;
             }
         }
         return questions;
