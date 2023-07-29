@@ -7,30 +7,28 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
-    private QuestionService questionService;
-    private Random random;
+    private final QuestionService service;
 
-    public ExaminerServiceImpl(QuestionService questionService) {
-        this.questionService = questionService;
-        this.random = new Random();
+    public ExaminerServiceImpl(QuestionService service) {
+        this.service = service;
     }
+
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        if (amount > questionService.getAll().size() || amount <= 0) {
-            throw new BadRequestException("Запрошенное количество вопросов превышает количество доступных вопросов либо равно или меньше 0");
+        if (amount > service.getAll().size()) {
+            throw new BadRequestException();
         }
-
-        Collection<Question> questions = new HashSet<>();
-        while (questions.size() < amount) {
-            Question randomQuestion = questionService.getRandomQuestion();
-            if (randomQuestion != null) {
-                questions.add(randomQuestion);
-            }
-        }
-        return questions;
+        return Stream.generate(() -> service.getRandomQuestion())
+                .distinct()
+                .limit(amount)
+                .collect(Collectors.toList());
     }
+
 }
