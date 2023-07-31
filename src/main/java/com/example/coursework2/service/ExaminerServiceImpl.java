@@ -25,7 +25,7 @@ public class ExaminerServiceImpl implements ExaminerService {
         if (amount > service.getAll().size()) {
             throw new BadRequestException();
         }
-        return Stream.generate(() -> service.getRandomQuestion())
+        return Stream.generate(service::getRandomQuestion)
                 .distinct()
                 .limit(amount)
                 .collect(Collectors.toList());

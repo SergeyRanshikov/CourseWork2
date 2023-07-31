@@ -1,7 +1,7 @@
 package com.example.coursework2.service;
 
 import com.example.coursework2.model.Question;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -30,7 +30,7 @@ public class ExaminerServiceTest {
     );
 
     @Test
-    void getQuestion() {
+    void getQuestions() {
         when(questionService.getAll()).thenReturn(questions);
         when(questionService.getRandomQuestion())
                 .thenReturn(questions.get(0))
